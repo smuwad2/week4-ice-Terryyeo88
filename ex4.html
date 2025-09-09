@@ -1,32 +1,72 @@
+<!DOCTYPE html>
 <html>
-
 <head>
-   <title>Event Handling</title>
+  <meta charset="utf-8" />
+  <title>Shopping List</title>
+  <style>
+    .remove {
+      margin-left: 8px;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-   <h1>Shopping List</h1>
-   <p>Get it done today</p>
+  <h1>Shopping List</h1>
+  <p>Get it done today</p>
 
-   <input type="text" id="inputText">
-   <!-- add a button here for adding new item -->
+  <input type="text" id="inputText" placeholder="Enter item">
+  <button id="addBtn" type="button">Enter</button>
 
-   <ul>
-      <li>Notebook<!--<button>Delete</button></li>-->
-      <li>Jello</li>
-      <li>Spinach</li>
-      <li>Rice</li>
-      <li>Birthday Cake</li>
-      <li>Candles</li>
-   </ul>
+  <ul id="list">
+    <li>Notebook <button class="remove">×</button></li>
+    <li>Jello <button class="remove">×</button></li>
+    <li>Spinach <button class="remove">×</button></li>
+    <li>Rice <button class="remove">×</button></li>
+    <li>Birthday Cake <button class="remove">×</button></li>
+    <li>Candles <button class="remove">×</button></li>
+  </ul>
 
-   <script>
+  <script>
+    const input = document.getElementById("inputText");
+    const addBtn = document.getElementById("addBtn");
+    const list   = document.getElementById("list");
 
-      // add code here
+    // add a new item
+    function addItem() {
+      const value = input.value.trim();
+      if (value === "") return;
 
-   </script>
+      const li = document.createElement("li");
+      li.textContent = value;
 
+      // make remove button
+      const btn = document.createElement("button");
+      btn.textContent = "×";
+      btn.className = "remove";
+      btn.onclick = function () {
+        li.remove();
+      };
+
+      li.appendChild(btn);
+      list.appendChild(li);
+
+      input.value = "";
+      input.focus();
+    }
+
+    // add item when clicking Enter button
+    addBtn.onclick = addItem;
+
+    // give remove functionality to existing items
+    const removeButtons = document.querySelectorAll(".remove");
+    removeButtons.forEach(function (btn) {
+      btn.onclick = function () {
+        btn.parentElement.remove();
+      };
+    });
+  </script>
 </body>
-
 </html>
+
